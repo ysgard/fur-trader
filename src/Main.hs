@@ -11,6 +11,7 @@ Portability: POSIX
 module Main where
 
 import Data.Char (toUpper)
+import System.Exit (exitSuccess)
 import System.IO (stdout, hFlush)
 
 
@@ -39,6 +40,11 @@ intro = do
   putStrLn "AND THE AMOUNT YOU RECEIVE FOR YOUR FURS WILL DEPEND"
   putStrLn "ON THE FORT THAT YOU CHOOSE."
 
+initialPelts :: IO Baggage
+initialPelts = do
+  
+
+
 ask :: String -> IO String
 ask prompt = do
   putStr $ prompt ++ " ? "
@@ -55,10 +61,22 @@ yesNo = do
 
 oneTwoThree :: IO Int
 oneTwoThree = do
-  answer <- ask responce: i love you daddy
+  answer <- ask "ANSWER 1, 2 or 3."
+  case (head answer) of
+   '1' -> return 1
+   '2' -> return 2
+   '3' -> return 3
+   _ -> oneTwoThree
+
+turn :: IO ()
 
 
 main :: IO ()
 main = do
   intro
+  putStrLn "DO YOU WISH TO TRADE FURS?"
+  startGame <- yesNo
+  if startGame
+    then turn
+    else exitSuccess
   
